@@ -6,5 +6,12 @@ export default function({
     if(!action.payload || !action.payload.then) {
       return next(action);
     }
+    // If we have a promise
+    action.payload
+      .then(function (response) {
+        // Replacing promise with response data
+        const newAction = { ...action, payload: response };
+        dispatch(newAction);
+      })
   }
 }
